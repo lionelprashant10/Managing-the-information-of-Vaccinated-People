@@ -1,4 +1,4 @@
-# Managing-the-information-of-Vaccinated-People
+# Managing-the-information-of-Vaccinated-People (in C language)
 Data Structure 
 
 
