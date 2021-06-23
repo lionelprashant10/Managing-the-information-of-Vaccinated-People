@@ -1,72 +1,98 @@
 typedef struct info
 {
-    char date;
-    char personalID;
-    char name[15];
-    char phone[15];
-    char gender;
-    int age;
+    char date[30];
+    char personalID[30];
+    char name[30];
+    char address[30];
+    char phone[30];
+    char gender[30];
+    int age[30];
+
     int size;
 }sqInfo;
 
+typedef struct infos
+{
+    sqInfo *infos[100];
+    int size;
+}sqInfos;
+
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <malloc.h>
 
 sqInfo *createInfo(int n)
 {
-    sqInfo *L;
-    int i;
-    L = (sqInfo *)malloc(n*sizeof(sqInfo));
+    sqInfo *R;
+    R = (sqInfo *)malloc(sizeof(sqInfo));
+    R->size = 0;
 
 
-    printf("...............................Please input the information of Vaccinated people: ..............................");
-    for(i=0;i<n;i++)
+    for(int i=0;i<n;i++)
     {
-        printf("\nEnter Vaccinated Date (yy/mm/dd) : ");
-        scanf(" ");
-        gets((L+i)->date);
+        printf("\nEnter the detail of Vaccinated Person [%3d]: \n",i+1);
+
+        printf("Enter Date(yy/mm/dd): ");
+        scanf("%s",&(R+i)->date);
 
         printf("Enter PersonalID: ");
-        scanf(" ");
-        gets((L+i)->personalID);
+        scanf("%s",&(R+i)->personalID);
 
         printf("Enter Name: ");
-        scanf(" ");
-        gets((L+i)->name);
+        scanf("%s",&(R+i)->name);
 
-        printf("Enter Phone No.: ");
-        scanf(" ");
-        gets((L+i)->phone);
+        printf("Enter Address: ");
+        scanf("%s",&(R+i)->address);
+
+        printf("Enter Phone NO.: ");
+        scanf("%s",&(R+i)->phone);
 
         printf("Enter Gender: ");
-        scanf(" ");
-        gets((L+i)->gender);
+        scanf("%s",(R+i)->gender);
 
         printf("Enter Age: ");
-        scanf("%d",&(L+i)->size);
+        scanf("%d",(R+i)->age);
 
-        L->size++;
 
+        R->size++;
     }
-    printf("Date\t PersonalID\t Name\t Phone No.\t Gender\t Age");
-    for(i=0;i<L->size;i++)
-    {
-        printf("%s\t %s\t %s\t %s\t %s\t %d",(L+i)->date,(L+i)->personalID,(L+i)->name,(L+i)->phone,(L+i)->gender,(L+i)->age);
-
-    }
+    return R;
 }
 
 
 
-
-void main()
+void display(sqInfo *R)
 {
-    int num;
-    sqInfo *R;
-    printf("Please input the no. of people vaccinated: ");
-    scanf("%d", &num);
+    int i;
 
-    R = createInfo(num);
+    printf("<------------------------Details of Vaccinated People-------------------------------------------------->");
+    for(i=0;i<R->size;i++)
+    {
+        printf("\n%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%d\n",(R+i)->date,(R+i)->personalID,(R+i)->name,(R+i)->address,(R+i)->phone,(R+i)->gender,*(R+i)->age);
+    }
+}
+
+sqInfos *addNewData()
+{
+    sqInfos *P;
+    P = (sqInfos *)malloc(sizeof(sqInfos));
+    P->size = 0;
+    int  n;
+    printf("Enter the number of Vaccinated People added: ");
+    scanf("%d",&n);
+    createInfo(n);
+}
+
+int main ()
+{
+    sqInfo *L;
+    sqInfos *infos;
+    infos = (sqInfos *)malloc(sizeof(sqInfos));
+    int n;
+    printf("Enter the vaccinated people number: ");
+    scanf("%d",&n);
+    L = createInfo(n);
+    display(L);
+
 
 }
